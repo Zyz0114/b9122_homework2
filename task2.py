@@ -7,9 +7,10 @@ import urllib.request
 
 
 def main():
-    seed_url = "https://www.federalreserve.gov/newsevents/pressreleases.htm"
-    keyword = "covid"
-    min_num_url = 10
+    seed_url = "https://www.sec.gov/news/pressreleases"
+    keyword = "charges"
+    min_num_url = 20
+    text = []
     urls = [seed_url]       # queue of the urls to crawl
     seen = [seed_url]       # stack of urls seen so far
     opened = []             # keep track of seen urls so that we don't revisit them
@@ -31,6 +32,7 @@ def main():
 
         if keyword in str(webpage).lower():
             opened.append(curr_url)
+            text.append(webpage)
             print("The %d URL contains %s: %s" % (len(opened), keyword, curr_url))
 
         # IF URL OPENS, CHECK WHICH URLS THE PAGE CONTAINS
@@ -51,6 +53,7 @@ def main():
     print("The following URLs contain " + keyword)
     for i, url in enumerate(opened):
         print(str.format("{}: {}", i + 1, url))
+        print(text[i])
 
 
 if __name__ == '__main__':
